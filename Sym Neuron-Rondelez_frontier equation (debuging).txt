@@ -1,0 +1,43 @@
+Computation of a*=f(N)
+Actually, the second solution would just gives a off result over the whole plane, which is not physically relevant.
+1) 1st method using discriminant
+In[80]:= ClearAll[a,kb,ka,\[Mu],\[Eta],lambdaa,lambdab,n,astar,\[Lambda]a,\[Lambda]b,ka,kb,a];
+
+g[a_,n_]:=kb*\[Mu]*a^3+(\[Mu]+kb*\[Eta])a^2+(\[Eta]-\[Lambda]b-kb*n)a-n
+In[82]:= poly=Expand[g[a,n]];
+poly//TraditionalForm
+
+Out[83]//TraditionalForm= a^3 kb \[Mu]+a^2 \[Eta] kb+a^2 \[Mu]+a \[Eta]-a kb n-a \[Lambda]b-n
+In[84]:= 
+disc=FullSimplify[Discriminant[poly,a]];
+Print["The discriminant of the y polynomial is \[CapitalDelta] = ",disc];
+
+During evaluation of In[84]:= The discriminant of the y polynomial is \[CapitalDelta] = kb^4 n^2 (\[Eta]^2+4 n \[Mu])+\[Mu]^2 ((\[Eta]-\[Lambda]b)^2+4 n \[Mu])+2 kb^3 n (\[Eta]^3+\[Eta]^2 \[Lambda]b+4 n \[Eta] \[Mu]+6 n \[Lambda]b \[Mu])+2 kb \[Mu] (-((\[Eta]-2 \[Lambda]b) (\[Eta]-\[Lambda]b)^2)+2 n (-2 \[Eta]+5 \[Lambda]b) \[Mu])+kb^2 (\[Eta]^2 (\[Eta]-\[Lambda]b)^2+2 n (\[Eta]^2-\[Eta] \[Lambda]b+6 \[Lambda]b^2) \[Mu]-8 n^2 \[Mu]^2)
+In[86]:= 
+solution=Solve[g[a,n]==0,a];
+sol=solution[[1]][[1]][[2]]
+Out[87]= -((kb \[Eta]+\[Mu])/(3 kb \[Mu]))-(2^(1/3) (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))+1/(3 2^(1/3) kb \[Mu])((-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))
+In[88]:= astar[n_]:=-((kb \[Eta]+\[Mu])/(3 kb \[Mu]))-(2^(1/3) (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))+1/(3 2^(1/3) kb \[Mu]) (-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 n \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 n \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb n+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3)
+
+
+
+2) Inserting a* into P=N+F(a(N))
+In[102]:= Clear[P,F,\[Lambda]a,\[Lambda]b,ka,kb,a];
+In[124]:= kb=0.9;
+ka=0.7;
+\[Mu]=0.2;
+\[Eta]=0.1;
+\[Lambda]b=1.0;
+\[Lambda]a=1.0;
+
+In[130]:= F[a_]:=(\[Lambda]b/(1+kb*a)-\[Lambda]a/(1+ka*a))*a;
+P[n_]:=Re[n+F[astar[n]]]
+
+In[132]:= P [n]
+Out[132]= Re[(-(1./(1+0.7 (-0.537037-(2.33319 (-0.0841+0.54 (-0.9-0.9 n)))/(-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3)+1.46982 (-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3))))+1./(1+0.9 (-0.537037-(2.33319 (-0.0841+0.54 (-0.9-0.9 n)))/(-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3)+1.46982 (-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3)))) (-0.537037-(2.33319 (-0.0841+0.54 (-0.9-0.9 n)))/(-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3)+1.46982 (-0.471598+Sqrt[4 (-0.0841+0.54 (-0.9-0.9 n))^3+(-0.471598+0.45198 n)^2]+0.45198 n)^(1/3))+n]
+
+In[133]:= Plot[{P[n],n},{n,0,5},PlotStyle->{Blue,{Red,Dashed}},PlotLegends->{"P(N) via astar","P = N"},AxesLabel->{"N","P"}]
+
+Out[133]= 	P(N) via astar
+	P = N
+

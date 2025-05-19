@@ -1,0 +1,38 @@
+Computation of a*=f(N)
+Actually, the second solution would just gives a off result over the whole plane, which is not physically relevant.
+1) 1st method using discriminant
+In[3]:= ClearAll[a,kb,g,\[Mu],\[Eta],\[Lambda]b];
+
+g[a_]:=kb*\[Mu]*a^3+(\[Mu]+kb*\[Eta])a^2+(\[Eta]-\[Lambda]b-kb*N)a-N
+In[5]:= poly=Expand[g[a]];
+poly//TraditionalForm
+
+Out[6]//TraditionalForm= a^3 kb \[Mu]+a^2 \[Eta] kb+a^2 \[Mu]+a \[Eta]-a kb N-a \[Lambda]b-N
+In[7]:= 
+disc=FullSimplify[Discriminant[poly,a]];
+Print["The discriminant of the y polynomial is \[CapitalDelta] = ",disc];
+
+During evaluation of In[7]:= The discriminant of the y polynomial is \[CapitalDelta] = kb^4 N^2 (\[Eta]^2+4 N \[Mu])+\[Mu]^2 ((\[Eta]-\[Lambda]b)^2+4 N \[Mu])+2 kb^3 N (\[Eta]^3+\[Eta]^2 \[Lambda]b+4 N \[Eta] \[Mu]+6 N \[Lambda]b \[Mu])+2 kb \[Mu] (-((\[Eta]-2 \[Lambda]b) (\[Eta]-\[Lambda]b)^2)+2 N (-2 \[Eta]+5 \[Lambda]b) \[Mu])+kb^2 (\[Eta]^2 (\[Eta]-\[Lambda]b)^2+2 N (\[Eta]^2-\[Eta] \[Lambda]b+6 \[Lambda]b^2) \[Mu]-8 N^2 \[Mu]^2)
+In[11]:= 
+solution=Solve[g[a]==0,a]
+Out[11]= {{a->-((kb \[Eta]+\[Mu])/(3 kb \[Mu]))-(2^(1/3) (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))+1/(3 2^(1/3) kb \[Mu])((-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))},{a->-((kb \[Eta]+\[Mu])/(3 kb \[Mu]))+((1+I Sqrt[3]) (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 2^(2/3) kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))-1/(6 2^(1/3) kb \[Mu])(1-I Sqrt[3]) (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3)},{a->-((kb \[Eta]+\[Mu])/(3 kb \[Mu]))+((1-I Sqrt[3]) (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 2^(2/3) kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))-1/(6 2^(1/3) kb \[Mu])(1+I Sqrt[3]) (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3)}}
+In[12]:= astar=solution[[1]][[1]][[2]]
+Out[12]= -((kb \[Eta]+\[Mu])/(3 kb \[Mu]))-(2^(1/3) (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2))/(3 kb \[Mu] (-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))+1/(3 2^(1/3) kb \[Mu])((-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3+Sqrt[(-2 kb^3 \[Eta]^3-9 kb^3 N \[Eta] \[Mu]+3 kb^2 \[Eta]^2 \[Mu]-9 kb^2 \[Eta] \[Lambda]b \[Mu]+18 kb^2 N \[Mu]^2+3 kb \[Eta] \[Mu]^2-9 kb \[Lambda]b \[Mu]^2-2 \[Mu]^3)^2+4 (3 kb (-kb N+\[Eta]-\[Lambda]b) \[Mu]-(kb \[Eta]+\[Mu])^2)^3])^(1/3))
+2) Inserting a* into P=N+F(a(N))
+In[13]:= Clear[P,F,\[Lambda]a,\[Lambda]b,ka,kb,a];
+In[45]:= kb=0.3;
+ka=0.8;
+\[Mu]=0.2;
+\[Eta]=0.1;
+\[Lambda]b=1.0;
+\[Lambda]a=1.0;
+
+In[51]:= F[a_]:=(\[Lambda]b/(1+kb*a)-\[Lambda]a/(1+ka*a))*a;
+P[N_,a_]:=N+F[a];
+In[56]:= P [N,astar]
+Out[56]= (1./(1+0.3 (-1.27778-(6.99956 (-0.0529+0.18 (-0.9-0.3 N)))/(-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3)+4.40945 (-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3)))-1./(1+0.8 (-1.27778-(6.99956 (-0.0529+0.18 (-0.9-0.3 N)))/(-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3)+4.40945 (-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3)))) (-1.27778-(6.99956 (-0.0529+0.18 (-0.9-0.3 N)))/(-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3)+4.40945 (-0.136114+Sqrt[4 (-0.0529+0.18 (-0.9-0.3 N))^3+(-0.136114+0.05994 N)^2]+0.05994 N)^(1/3))+N
+In[57]:= Plot[{P[N,astar],N},{N,0,5},PlotLabel->"P vs N for fixed a, with reference line P = N",AxesLabel->{"N","P"},PlotStyle->{Blue,{Red,Dashed}},PlotLegends->{"P(N, a*)","P = N"},PlotRange->All]
+During evaluation of In[57]:= Plot::invregion: (True&)[Identity[#1],Identity[#2]]& must be a Boolean function.
+Out[57]= 	P(N, a*)
+	P = N
+
